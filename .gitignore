@@ -1,8 +1,2 @@
-.tmp
-.sass-cache
-
+wp-config.php
 .DS_Store
-
-app/components
-dist
-node_modules
