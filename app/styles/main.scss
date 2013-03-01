@@ -1,0 +1,128 @@
+@import 'sass-bootstrap/lib/bootstrap';
+// @import 'sass-bootstrap/lib/responsive';
+
+[class^="icon-"], [class*=" icon-"] {
+  background-image: url("/images/glyphicons-halflings.png");
+}
+
+body * {
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: white;
+  font-weight: 100;
+  line-height: 1em;
+}
+
+h1 {
+  font-size: 7em;
+  line-height: 1.3em;
+  width: 100%;
+}
+
+h2 {
+  font-size: 5em;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+a {
+  color: white;
+
+  &:hover {
+    color: gray;
+    text-decoration: none;
+  }
+}
+
+.navbar-fixed-top {
+  margin-bottom: 18px;
+  position: fixed;
+
+  ul.nav {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    li {
+      font-size: 1.8em;
+      font-weight: 300;
+      padding-right: 20px;
+    }
+  }
+}
+
+.story {
+  margin: 0 auto;
+  padding: 200px;
+  padding-left: 120px;
+  padding-right: 100px;
+  padding-bottom: 220px;
+}
+
+h2.skill {
+  margin-top: 120px;
+}
+
+ul.skill_list {
+  list-style-position: inside;
+  margin-left: 12px;
+  width: 100%;
+
+  li {
+    font-size: 4em;
+    font-weight: 100;
+    line-height: 1.5em;
+    width: 100%;
+  }
+}
+
+#home {
+  background-color: #c1004f;
+  padding-top: 20px;
+
+  .bio {
+    font-size: 10em;
+  }
+}
+
+#second {
+  background-color: #f4b300;
+  color: white;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0;
+}
+
+#third {
+  background-color: #00c13f;
+  color: white;
+}
+
+#fourth {
+  background: #56c5ff;
+  // margin: 0 auto;
+}
+
+#fifth {
+  background: #333;
+
+  .story {
+    padding-bottom: 200px;
+  }
+}
+
+@media (max-width: 979px) {
+  .navbar-fixed-top {
+    ul.nav {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      li {
+        font-size: 1em;
+        padding-right: 10px;
+      }
+    }
+  }
+}

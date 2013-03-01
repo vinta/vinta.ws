@@ -1,0 +1,7 @@
+AddHandler fcgid-script .php
+Options -Indexes
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.vinta\.ws$ [NC]
+RewriteRule ^(.*)$ http://vinta.ws/$1 [R=301]
+RewriteRule ^wordpress/(.*)$ /blog/$1 [R=301,L]
