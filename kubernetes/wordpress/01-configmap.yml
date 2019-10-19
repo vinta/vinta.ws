@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-wp-includes
+data:
+  security.conf: |
+    location ~ /\.(?!well-known) {
+      deny all;
+    }
+
+    location ~* /(?:wp-content|wp-includes)/.*\.php$ {
+      deny all;
+    }
+
+    # WordPress: deny general stuff
+    location ~* /(?:xmlrpc\.php|wp-links-opml\.php|wp-config\.php|wp-config-sample\.php|wp-comments-post\.php|readme\.html|license\.txt)$ {
+      deny all;
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-wp-sites
+data:
+  blog.conf: |
+    server {
+      listen 80;
+      root /var/www/html;
+      index index.php;
+
+      if ($http_user_agent ~* (GoogleHC)) { # Google Kubernetes Engine healthchecks
+        return 200;
+      }
+
+      include /etc/nginx/includes/security.conf;
+
+      location /blog/ {
+        try_files $uri $uri/ /blog/index.php?q=$uri&$args;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/blog/index.php?xml_sitemap=params=$2" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/blog/index.php?xml_sitemap=params=$2;zip=true" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/blog/index.php?xml_sitemap=params=$2;html=true" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/blog/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+      }
+
+      location ~ [^/]\.php(/|$) {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_pass unix:/var/run/php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_buffers 8 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+      }
+    }
+  code.conf: |
+    server {
+      listen 80;
+      root /var/www/html;
+      index index.php;
+
+      if ($http_user_agent ~* (GoogleHC)) { # Google Kubernetes Engine healthchecks
+        return 200;
+      }
+
+      include /etc/nginx/includes/security.conf;
+
+      location /code/ {
+        try_files $uri $uri/ /code/index.php?q=$uri&$args;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/code/index.php?xml_sitemap=params=$2" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/code/index.php?xml_sitemap=params=$2;zip=true" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/code/index.php?xml_sitemap=params=$2;html=true" last;
+        rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/code/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+      }
+
+      location ~ [^/]\.php(/|$) {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_pass unix:/var/run/php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_buffers 8 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+      }
+    }

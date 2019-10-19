@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: load-balancer
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - host: vinta.ws
+    http:
+      paths:
+      - path: /blog
+        backend:
+          serviceName: my-blog
+          servicePort: http
+      - path: /code
+        backend:
+          serviceName: code-blog
+          servicePort: http
+      - backend:
+          serviceName: frontend
+          servicePort: http
+  - host: ifailedtheturingtest.com
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: http

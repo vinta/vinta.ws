@@ -1,0 +1,50 @@
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: nfs-server
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: nfs-server
+#   serviceName: nfs-server
+#   volumeClaimTemplates:
+#   - metadata:
+#       name: data
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       storageClassName: standard
+#       resources:
+#         requests:
+#           storage: 10Gi
+#   template:
+#     metadata:
+#       labels:
+#         app: nfs-server
+#     spec:
+#       terminationGracePeriodSeconds: 10
+#       containers:
+#         - name: nfs-server
+#           image: gcr.io/google_containers/volume-nfs:0.8
+#           ports:
+#             - name: nfs
+#               containerPort: 2049
+#               protocol: TCP
+#             - name: mountd
+#               containerPort: 20048
+#               protocol: TCP
+#             - name: rpcbind-tcp
+#               containerPort: 111
+#               protocol: TCP
+#             - name: rpcbind-udp
+#               containerPort: 111
+#               protocol: UDP
+#           volumeMounts:
+#             - name: data
+#               mountPath: /exports
+#           securityContext:
+#             # privileged: true
+#             capabilities:
+#               add:
+#                 - DAC_READ_SEARCH
+#                 - SYS_RESOURCE

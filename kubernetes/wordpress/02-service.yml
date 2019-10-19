@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-blog
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: my-blog
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-blog
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  selector:
+    app: code-blog
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: http

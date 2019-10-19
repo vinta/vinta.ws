@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-blog
+  template:
+    metadata:
+      labels:
+        app: my-blog
+    spec:
+      volumes:
+      - name: php-fpm-unix-socket
+        emptyDir: {}
+      - name: wordpress-root
+        emptyDir: {}
+      - name: nginx-global-config
+        configMap:
+          name: nginx-global-config
+      - name: nginx-wp-includes
+        configMap:
+          name: nginx-wp-includes
+      - name: nginx-wp-sites
+        configMap:
+          name: nginx-wp-sites
+      containers:
+      - name: wordpress
+        image: asia.gcr.io/vinta-254817/my-blog:70d4853
+        imagePullPolicy: IfNotPresent
+        workingDir: /var/www/html/code # HACK: specify the WordPress installation path
+        envFrom:
+        - configMapRef:
+            name: my-blog-env
+        volumeMounts:
+        - name: php-fpm-unix-socket
+          mountPath: /var/run
+        - name: wordpress-root
+          mountPath: /var/www/html/code
+      - name: nginx
+        image: nginx:1.17.4-alpine
+        volumeMounts:
+        - name: php-fpm-unix-socket
+          mountPath: /var/run
+        - name: wordpress-root
+          mountPath: /var/www/html/code
+          readOnly: true
+        - name: nginx-global-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+        - name: nginx-wp-includes
+          mountPath: /etc/nginx/includes/
+          readOnly: true
+        - name: nginx-wp-sites
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: code.conf
+          readOnly: true
+        ports:
+        - name: http
+          containerPort: 80
+        # readinessProbe:
+        #   httpGet:
+        #     path: /code/wp-admin/install.php
+        #     port: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-blog
+  template:
+    metadata:
+      labels:
+        app: code-blog
+    spec:
+      volumes:
+      - name: php-fpm-unix-socket
+        emptyDir: {}
+      - name: wordpress-root
+        emptyDir: {}
+      - name: nginx-global-config
+        configMap:
+          name: nginx-global-config
+      - name: nginx-wp-includes
+        configMap:
+          name: nginx-wp-includes
+      - name: nginx-wp-sites
+        configMap:
+          name: nginx-wp-sites
+      containers:
+      - name: wordpress
+        image: asia.gcr.io/vinta-254817/code-blog:70d4853
+        imagePullPolicy: IfNotPresent
+        workingDir: /var/www/html/code # HACK: specify the WordPress installation path
+        envFrom:
+        - configMapRef:
+            name: code-blog-env
+        volumeMounts:
+        - name: php-fpm-unix-socket
+          mountPath: /var/run
+        - name: wordpress-root
+          mountPath: /var/www/html/code
+      - name: nginx
+        image: nginx:1.17.4-alpine
+        volumeMounts:
+        - name: php-fpm-unix-socket
+          mountPath: /var/run
+        - name: wordpress-root
+          mountPath: /var/www/html/code
+          readOnly: true
+        - name: nginx-global-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+        - name: nginx-wp-includes
+          mountPath: /etc/nginx/includes/
+          readOnly: true
+        - name: nginx-wp-sites
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: code.conf
+          readOnly: true
+        ports:
+        - name: http
+          containerPort: 80
+        # readinessProbe:
+        #   httpGet:
+        #     path: /code/wp-admin/install.php
+        #     port: http
