@@ -20,10 +20,8 @@ spec:
           name: nginx-global-config
       initContainers:
       - name: static-files
-        image: vinta/static-files:v3
-        imagePullPolicy: Never
-        # image: asia.gcr.io/vinta-254817/static-files:f70009e
-        # imagePullPolicy: IfNotPresent
+        image: asia.gcr.io/vinta-254817/static-files:70d4853
+        imagePullPolicy: IfNotPresent
         command: ["cp", "-a", "/var/www/.", "/usr/share/nginx/html/"]
         volumeMounts:
         - name: html
