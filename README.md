@@ -1,10 +1,13 @@
-# [vinta.ws](http://vinta.ws/)
+# [vinta.ws](https://vinta.ws/)
 
-Stack:
+The deployment of my WordPress blogs on Kubernetes ([Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)).
 
-   * Ubuntu
-   * nginx
-   * MariaDB
-   * Memcache
-   * PHP-FPM
-   * WordPress (install in a subdirectory)
+## Deployment
+
+```console
+$ cd kubernetes
+
+$ kubectl apply -f ingress.yaml
+$ kubectl apply -f storageclass.yaml
+$ kubectl apply -f . -R
+```
