@@ -1,6 +1,6 @@
 # [vinta.ws](https://vinta.ws/)
 
-The deployment of my WordPress blogs on Kubernetes ([Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)).
+The deployment of my WordPress blogs on Google Kubernetes Engine.
 
 ## Deployment
 
