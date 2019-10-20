@@ -1,15 +1,6 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: hdd
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-standard
-volumeBindingMode: WaitForFirstConsumer
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
   name: ssd
 provisioner: kubernetes.io/gce-pd
 parameters:
