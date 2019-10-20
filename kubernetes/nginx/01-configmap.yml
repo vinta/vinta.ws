@@ -62,6 +62,8 @@ data:
         deny all;
       }
 
+      rewrite ^([^.]*[^/])$ $1/ permanent;
+
       location / {
         index index.html index.htm;
       }

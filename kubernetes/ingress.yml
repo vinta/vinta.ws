@@ -3,17 +3,17 @@ kind: Ingress
 metadata:
   name: load-balancer
   annotations:
-    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.class: "gce" # https://github.com/kubernetes/ingress-gce
 spec:
   rules:
   - host: vinta.ws
     http:
       paths:
-      - path: /blog
+      - path: /blog/*
         backend:
           serviceName: my-blog
           servicePort: http
-      - path: /code
+      - path: /code/*
         backend:
           serviceName: code-blog
           servicePort: http
