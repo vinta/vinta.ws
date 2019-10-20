@@ -11,8 +11,6 @@ do
     rm -f plugin.zip
 done
 
-mv plugins/wp-gfm-0.11 plugins/wp-gfm
-
 # install themes
 mkdir -p themes
 
