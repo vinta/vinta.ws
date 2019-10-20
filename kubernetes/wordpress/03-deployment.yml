@@ -28,7 +28,7 @@ spec:
           name: nginx-wp-sites
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/my-blog:70d4853
+        image: asia.gcr.io/vinta-254817/my-blog:fa4c1da
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/blog # HACK: specify the WordPress installation path
         envFrom:
@@ -96,7 +96,7 @@ spec:
           name: nginx-wp-sites
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/code-blog:70d4853
+        image: asia.gcr.io/vinta-254817/code-blog:fa4c1da
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/code # HACK: specify the WordPress installation path
         envFrom:
