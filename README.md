@@ -7,7 +7,7 @@ The deployment of my WordPress blogs on Google Kubernetes Engine.
 ```console
 $ cd kubernetes
 
-$ kubectl apply -f ingress.yaml
 $ kubectl apply -f storageclass.yaml
 $ kubectl apply -f . -R
+$ kubectl apply -f ingress.yaml
 ```
