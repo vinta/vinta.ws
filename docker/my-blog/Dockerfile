@@ -12,7 +12,9 @@ RUN apt-get update && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/*
 
-COPY php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY php/custom.ini /usr/local/etc/php/conf.d/
+COPY php-fpm/zz-docker.conf /usr/local/etc/php-fpm.d/
 COPY wordpress/* /usr/src/wordpress/wp-content/
 
 RUN cd /usr/src/wordpress/wp-content/ && \
