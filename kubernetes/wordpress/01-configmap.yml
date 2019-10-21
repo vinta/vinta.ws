@@ -20,9 +20,9 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-wp-sites
+  name: my-blog-nginx-site
 data:
-  blog.conf: |
+  default.conf: |
     server {
       listen 80;
       root /var/www/html;
@@ -55,13 +55,23 @@ data:
         fastcgi_param PATH_INFO $fastcgi_path_info;
       }
     }
-  code.conf: |
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: code-blog-nginx-site
+data:
+  default.conf: |
     server {
       listen 80;
       root /var/www/html;
       index index.php;
 
       if ($http_user_agent ~* (GoogleHC)) { # Google Kubernetes Engine healthchecks
+        return 200;
+      }
+
+      if ($request_method ~ "HEAD") {
         return 200;
       }
 

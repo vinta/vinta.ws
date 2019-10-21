@@ -23,9 +23,9 @@ spec:
       - name: nginx-wp-includes
         configMap:
           name: nginx-wp-includes
-      - name: nginx-wp-sites
+      - name: my-blog-nginx-site
         configMap:
-          name: nginx-wp-sites
+          name: my-blog-nginx-site
       containers:
       - name: wordpress
         image: asia.gcr.io/vinta-254817/my-blog:fa4c1da
@@ -54,9 +54,8 @@ spec:
         - name: nginx-wp-includes
           mountPath: /etc/nginx/includes/
           readOnly: true
-        - name: nginx-wp-sites
-          mountPath: /etc/nginx/conf.d/default.conf
-          subPath: blog.conf
+        - name: my-blog-nginx-site
+          mountPath: /etc/nginx/conf.d/
           readOnly: true
         ports:
         - name: http
@@ -92,28 +91,31 @@ spec:
         emptyDir: {}
       - name: wordpress-root
         emptyDir: {}
+      - name: code-wp-config
+        configMap:
+          name: code-wp-config
       - name: nginx-global-config
         configMap:
           name: nginx-global-config
       - name: nginx-wp-includes
         configMap:
           name: nginx-wp-includes
-      - name: nginx-wp-sites
+      - name: code-blog-nginx-site
         configMap:
-          name: nginx-wp-sites
+          name: code-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/code-blog:fa4c1da
+        image: asia.gcr.io/vinta-254817/code-blog:ca27647
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/code # HACK: specify the WordPress installation path
-        envFrom:
-        - configMapRef:
-            name: code-blog-env
         volumeMounts:
         - name: php-fpm-unix-socket
           mountPath: /var/run
         - name: wordpress-root
           mountPath: /var/www/html/code
+        - name: code-wp-config
+          mountPath: /var/www/html/code/wp-config.php
+          subPath: wp-config.php
       - name: nginx
         image: nginx:1.17.4-alpine
         volumeMounts:
@@ -129,9 +131,8 @@ spec:
         - name: nginx-wp-includes
           mountPath: /etc/nginx/includes/
           readOnly: true
-        - name: nginx-wp-sites
-          mountPath: /etc/nginx/conf.d/default.conf
-          subPath: code.conf
+        - name: code-blog-nginx-site
+          mountPath: /etc/nginx/conf.d/
           readOnly: true
         ports:
         - name: http
