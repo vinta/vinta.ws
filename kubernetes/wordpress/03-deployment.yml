@@ -88,14 +88,16 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchExpressions:
-                - key: "app"
-                  operator: In
-                  values:
-                  - code-blog
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100 # prevent the scheduler from locating two pods on the same node
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - code-blog
       volumes:
       - name: php-fpm-unix-socket
         emptyDir: {}
