@@ -54,6 +54,13 @@ spec:
         - name: my-blog-wp-config
           mountPath: /var/www/html/blog/wp-config.php
           subPath: wp-config.php
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
       - name: nginx
         image: nginx:1.17.4-alpine
         volumeMounts:
@@ -81,11 +88,11 @@ spec:
         #     port: http
         resources:
           requests:
-            cpu: 250m
-            memory: 256Mi
+            cpu: 50m
+            memory: 100Mi
           limits:
-            cpu: 1000m
-            memory: 256Mi
+            cpu: 100m
+            memory: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -143,6 +150,13 @@ spec:
         - name: code-blog-wp-config
           mountPath: /var/www/html/code/wp-config.php
           subPath: wp-config.php
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
       - name: nginx
         image: nginx:1.17.4-alpine
         volumeMounts:
@@ -170,8 +184,8 @@ spec:
         #     port: http
         resources:
           requests:
-            cpu: 250m
-            memory: 256Mi
+            cpu: 50m
+            memory: 100Mi
           limits:
-            cpu: 1000m
-            memory: 256Mi
+            cpu: 100m
+            memory: 100Mi
