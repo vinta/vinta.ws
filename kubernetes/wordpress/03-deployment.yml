@@ -12,11 +12,26 @@ spec:
       labels:
         app: my-blog
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100 # prevent the scheduler from locating two pods on the same node
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - my-blog
       volumes:
       - name: php-fpm-unix-socket
         emptyDir: {}
       - name: wordpress-root
         emptyDir: {}
+      - name: my-blog-wp-config
+        configMap:
+          name: my-blog-wp-config
       - name: nginx-global-config
         configMap:
           name: nginx-global-config
@@ -28,17 +43,17 @@ spec:
           name: my-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/my-blog:fa4c1da
+        image: asia.gcr.io/vinta-254817/my-blog:2d21952
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/blog # HACK: specify the WordPress installation path
-        envFrom:
-        - configMapRef:
-            name: my-blog-env
         volumeMounts:
         - name: php-fpm-unix-socket
           mountPath: /var/run
         - name: wordpress-root
           mountPath: /var/www/html/blog
+        - name: my-blog-wp-config
+          mountPath: /var/www/html/blog/wp-config.php
+          subPath: wp-config.php
       - name: nginx
         image: nginx:1.17.4-alpine
         volumeMounts:
@@ -103,9 +118,9 @@ spec:
         emptyDir: {}
       - name: wordpress-root
         emptyDir: {}
-      - name: code-wp-config
+      - name: code-blog-wp-config
         configMap:
-          name: code-wp-config
+          name: code-blog-wp-config
       - name: nginx-global-config
         configMap:
           name: nginx-global-config
@@ -117,7 +132,7 @@ spec:
           name: code-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/code-blog:ca27647
+        image: asia.gcr.io/vinta-254817/code-blog:2d21952
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/code # HACK: specify the WordPress installation path
         volumeMounts:
@@ -125,7 +140,7 @@ spec:
           mountPath: /var/run
         - name: wordpress-root
           mountPath: /var/www/html/code
-        - name: code-wp-config
+        - name: code-blog-wp-config
           mountPath: /var/www/html/code/wp-config.php
           subPath: wp-config.php
       - name: nginx
