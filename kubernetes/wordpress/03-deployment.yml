@@ -77,7 +77,7 @@ kind: Deployment
 metadata:
   name: code-blog
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: code-blog
@@ -86,6 +86,16 @@ spec:
       labels:
         app: code-blog
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: "app"
+                  operator: In
+                  values:
+                  - code-blog
       volumes:
       - name: php-fpm-unix-socket
         emptyDir: {}
