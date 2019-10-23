@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="douban" unicode="&#59061;" d="M88.217 822.917l847.533 0 0-95.469-847.533 0 0 95.469ZM862.075 254.638l0 373.22L161.892 627.858l0-373.22L862.075 254.638zM263.428 532.455l498.134 0 0-182.463L263.428 349.992 263.428 532.455zM710.62 39.514c30.466 46.638 59.218 100.728 85.858 162.12l-101.865 37.128c-26.493-72.754-57.338-139.273-92.437-199.248L424.922 39.514c-29.377 77.73-62.53 144.202-99.722 199.248l-93.688-37.128c38.642-57.963 69.8-111.921 93.688-162.12L64.246 39.514l0-94.431 895.508 0 0 94.431L710.62 39.514z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

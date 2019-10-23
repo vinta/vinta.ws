@@ -1,0 +1,18 @@
+# http://humanstxt.org
+
+# TEAM
+	Owner: Vinta Chen
+	Contact: vinta.chen [at] gmail.com
+	Site: https://vinta.ws
+	Twitter: @vinta
+	Location: Taipei, Taiwan
+
+# THANKS
+	Web Design
+	Site: https://html5up.net
+
+	Icons
+	Site: https://thenounproject.com/
+
+# SITE
+	Language: English / Chinese

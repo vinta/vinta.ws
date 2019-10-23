@@ -1,2 +1,4 @@
+# www.robotstxt.org
+
 User-Agent: *
 Disallow: */wp-admin/
