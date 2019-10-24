@@ -43,7 +43,7 @@ spec:
           name: my-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/my-blog:2dfc81d
+        image: asia.gcr.io/vinta-254817/my-blog:131c5ee
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/blog # HACK: specify the WordPress installation path
         volumeMounts:
@@ -139,7 +139,7 @@ spec:
           name: code-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/code-blog:2dfc81d
+        image: asia.gcr.io/vinta-254817/code-blog:131c5ee
         imagePullPolicy: IfNotPresent
         workingDir: /var/www/html/code # HACK: specify the WordPress installation path
         volumeMounts:
