@@ -109,7 +109,7 @@ data:
       rewrite ^/unfuckable/(\d+).html$ https://vinta.ws/blog/$1 permanent;
       rewrite ^/unfuckable/$ https://vinta.ws/blog/category/unfuckable/ permanent;
 
-      location ~ ^/(audio|documents|icons|images|video)/ {
+      location ~ ^/(audio|documents|video)/ {
         rewrite ^(.*)$ https://files.vinta.ws/static$request_uri permanent;
       }
 
