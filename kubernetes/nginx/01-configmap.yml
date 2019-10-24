@@ -50,9 +50,54 @@ data:
       # add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
       # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
+      map $host$request_uri $my_blog_post_id {
+        default "";
+        vinta.ws/unfuckable/107.html "593";
+        vinta.ws/unfuckable/95.html  "635";
+        vinta.ws/unfuckable/93.html  "634";
+        vinta.ws/unfuckable/92.html  "633";
+        vinta.ws/unfuckable/91.html  "632";
+        vinta.ws/unfuckable/90.html  "631";
+        vinta.ws/unfuckable/89.html  "630";
+        vinta.ws/unfuckable/88.html  "629";
+        vinta.ws/unfuckable/87.html  "628";
+        vinta.ws/unfuckable/86.html  "627";
+        vinta.ws/unfuckable/85.html  "626";
+        vinta.ws/unfuckable/83.html  "625";
+        vinta.ws/unfuckable/81.html  "624";
+        vinta.ws/unfuckable/80.html  "623";
+        vinta.ws/unfuckable/79.html  "622";
+        vinta.ws/unfuckable/74.html  "621";
+        vinta.ws/unfuckable/72.html  "620";
+        vinta.ws/unfuckable/71.html  "619";
+        vinta.ws/unfuckable/70.html  "618";
+        vinta.ws/unfuckable/69.html  "617";
+        vinta.ws/unfuckable/65.html  "616";
+        vinta.ws/unfuckable/64.html  "615";
+        vinta.ws/unfuckable/62.html  "614";
+        vinta.ws/unfuckable/58.html  "613";
+        vinta.ws/unfuckable/36.html  "611";
+        vinta.ws/unfuckable/35.html  "610";
+        vinta.ws/unfuckable/34.html  "609";
+        vinta.ws/unfuckable/38.html  "612";
+        vinta.ws/unfuckable/33.html  "608";
+        vinta.ws/unfuckable/32.html  "607";
+        vinta.ws/unfuckable/31.html  "606";
+        vinta.ws/unfuckable/30.html  "605";
+        vinta.ws/unfuckable/29.html  "603";
+        vinta.ws/unfuckable/28.html  "602";
+        vinta.ws/unfuckable/27.html  "601";
+        vinta.ws/unfuckable/25.html  "600";
+        vinta.ws/unfuckable/24.html  "599";
+        vinta.ws/unfuckable/22.html  "598";
+        vinta.ws/unfuckable/21.html  "597";
+        vinta.ws/unfuckable/18.html  "596";
+        vinta.ws/unfuckable/9.html   "605";
+      }
+
       include /etc/nginx/conf.d/*.conf;
     }
-  default.conf: |
+  vinta-ws.conf: |
     server {
       listen 80 default;
       server_name vinta.ws;
@@ -63,6 +108,14 @@ data:
       }
 
       rewrite ^([^.]*[^/])$ $1/ permanent;
+
+      if ($my_blog_post_id != "") {
+        rewrite ^(.*)$ https://vinta.ws/blog/$my_blog_post_id permanent;
+      }
+
+      rewrite ^/wordpress/?(.*)$ https://vinta.ws/blog/$1 permanent;
+      rewrite ^/unfuckable/(\d+).html$ https://vinta.ws/blog/$1 permanent;
+      rewrite ^/unfuckable/$ https://vinta.ws/blog/category/unfuckable/ permanent;
 
       location / {
         index index.html index.htm;
