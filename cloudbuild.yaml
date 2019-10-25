@@ -40,3 +40,5 @@ images:
 - asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA
 - asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA
 - asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA
+options:
+  machineType: 'N1_HIGHCPU_8'
