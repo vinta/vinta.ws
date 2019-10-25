@@ -3,6 +3,8 @@ substitutions:
   _CODE_BLOG_IMAGE_NAME: code-blog
   _STATIC_FILES_IMAGE_NAME: static-files
 steps:
+
+# my blog
 - id: my-blog-build-image
   name: gcr.io/cloud-builders/docker
   args: [
@@ -12,6 +14,8 @@ steps:
     "docker/my-blog/",
   ]
   waitFor: ["-"]
+
+# code blog
 - id: code-blog-cache-image
   name: gcr.io/cloud-builders/docker
   entrypoint: "/bin/bash"
@@ -30,6 +34,8 @@ steps:
     "docker/code-blog/",
   ]
   waitFor: ["code-blog-cache-image"]
+
+# static files
 - id: static-files-build-image
   name: gcr.io/cloud-builders/docker
   args: [
@@ -39,6 +45,7 @@ steps:
     "docker/static-files/",
   ]
   waitFor: ["-"]
+
 images:
 - asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA
 - asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA
