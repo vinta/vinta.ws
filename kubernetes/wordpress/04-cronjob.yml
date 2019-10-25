@@ -1,0 +1,55 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: my-blog-wp-cron
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: my-blog-wp-config
+            configMap:
+              name: my-blog-wp-config
+          containers:
+          - name: wp-cron
+            image: asia.gcr.io/vinta-254817/my-blog:752565f
+            command: ["/usr/local/bin/php"]
+            args:
+            - /usr/src/wordpress/wp-cron.php
+            volumeMounts:
+            - name: my-blog-wp-config
+              mountPath: /usr/src/wordpress/wp-config.php
+              subPath: wp-config.php
+              readOnly: true
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: code-blog-wp-cron
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: code-blog-wp-config
+            configMap:
+              name: code-blog-wp-config
+          containers:
+          - name: wp-cron
+            image: asia.gcr.io/vinta-254817/code-blog:752565f
+            command: ["/usr/local/bin/php"]
+            args:
+            - /usr/src/wordpress/wp-cron.php
+            volumeMounts:
+            - name: code-blog-wp-config
+              mountPath: /usr/src/wordpress/wp-config.php
+              subPath: wp-config.php
+              readOnly: true
+          restartPolicy: OnFailure
