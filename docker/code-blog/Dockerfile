@@ -13,13 +13,15 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app/
-COPY wordpress/* /usr/src/app/
+COPY wordpress/ /usr/src/app/
 RUN chmod +x install.sh && \
     sh install.sh && \
+    mv -f hightlight/highlight-core.js plugins/prismatic/lib/highlight/js/ && \
     rm -rf \
     install.sh \
     plugins.txt \
-    themes.txt
+    themes.txt \
+    hightlight/
 
 ###
 
@@ -28,7 +30,6 @@ FROM wordpress:5.2.4-fpm
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY php/custom.ini /usr/local/etc/php/conf.d/
 COPY php-fpm/zz-docker.conf /usr/local/etc/php-fpm.d/
-
 
 COPY --from=builder /usr/src/wp-cli/wp /usr/local/bin/
 COPY --from=builder /usr/src/app/ /usr/src/wordpress/wp-content/
