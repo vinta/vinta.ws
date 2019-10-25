@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: my-blog-wp-cron
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -31,7 +31,7 @@ kind: CronJob
 metadata:
   name: code-blog-wp-cron
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
