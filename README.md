@@ -1,6 +1,6 @@
 # [vinta.ws](https://vinta.ws/)
 
-The deployment configuration of my WordPress blogs on Google Kubernetes Engine.
+The deployment configurations of my WordPress blogs on Google Kubernetes Engine.
 
 ## Deployment
 
@@ -8,3 +8,7 @@ The deployment configuration of my WordPress blogs on Google Kubernetes Engine.
 $ cd kubernetes
 $ kubectl apply -f . -R
 ```
+
+## Related Posts
+
+- [Setup Scalable WordPress Sites on Kubernetes](https://vinta.ws/code/setup-scalable-wordpress-sites-on-kubernetes.html)
