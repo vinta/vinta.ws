@@ -28,7 +28,7 @@ data:
       root /var/www/html;
       index index.php;
 
-      if ($http_user_agent ~* (GoogleHC)) { # Google Kubernetes Engine healthchecks
+      if ($http_user_agent ~* (GoogleHC)) { # https://cloud.google.com/kubernetes-engine/docs/concepts/ingress#health_checks
         return 200;
       }
 
@@ -67,11 +67,7 @@ data:
       root /var/www/html;
       index index.php;
 
-      if ($http_user_agent ~* (GoogleHC)) { # Google Kubernetes Engine healthchecks
-        return 200;
-      }
-
-      if ($request_method ~ "HEAD") {
+      if ($http_user_agent ~* (GoogleHC)) { # https://cloud.google.com/kubernetes-engine/docs/concepts/ingress#health_checks
         return 200;
       }
 
