@@ -56,6 +56,7 @@ spec:
         - name: my-blog-wp-config
           mountPath: /var/www/html/blog/wp-config.php
           subPath: wp-config.php
+          readOnly: true
         resources:
           requests:
             cpu: 100m
