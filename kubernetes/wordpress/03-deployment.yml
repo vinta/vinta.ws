@@ -26,7 +26,8 @@ spec:
                     - my-blog
       volumes:
       - name: php-fpm-unix-socket
-        emptyDir: {}
+        emptyDir:
+          medium: Memory
       - name: wordpress-root
         emptyDir:
           medium: Memory
@@ -123,7 +124,8 @@ spec:
                     - code-blog
       volumes:
       - name: php-fpm-unix-socket
-        emptyDir: {}
+        emptyDir:
+          medium: Memory
       - name: wordpress-root
         emptyDir:
           medium: Memory
