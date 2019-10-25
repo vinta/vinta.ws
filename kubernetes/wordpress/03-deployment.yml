@@ -28,7 +28,8 @@ spec:
       - name: php-fpm-unix-socket
         emptyDir: {}
       - name: wordpress-root
-        emptyDir: {}
+        emptyDir:
+          medium: Memory
       - name: my-blog-wp-config
         configMap:
           name: my-blog-wp-config
@@ -124,7 +125,8 @@ spec:
       - name: php-fpm-unix-socket
         emptyDir: {}
       - name: wordpress-root
-        emptyDir: {}
+        emptyDir:
+          medium: Memory
       - name: code-blog-wp-config
         configMap:
           name: code-blog-wp-config
