@@ -32,7 +32,7 @@ spec:
           name: nginx-global-config
       initContainers:
       - name: static-files
-        image: asia.gcr.io/vinta-254817/static-files:54715ce
+        image: asia.gcr.io/vinta-254817/static-files:752565f
         imagePullPolicy: IfNotPresent
         command: ["cp", "-a", "/var/www/.", "/usr/share/nginx/html/"]
         volumeMounts:
