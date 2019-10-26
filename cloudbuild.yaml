@@ -4,99 +4,66 @@ substitutions:
   _STATIC_FILES_IMAGE_NAME: static-files
 steps:
 
-# kaniko build
-# https://cloud.google.com/cloud-build/docs/kaniko-cache
+# my blog
+- id: my-blog-cache-image
+  name: gcr.io/cloud-builders/docker
+  entrypoint: "/bin/bash"
+  args:
+   - '-c'
+   - |
+     docker pull asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
+  waitFor: ["-"]
 - id: my-blog-build-image
-  name: gcr.io/kaniko-project/executor:latest
-  args:
-  - --context=docker/my-blog/
-  - --dockerfile=docker/my-blog/Dockerfile
-  - --destination=asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA
-  - --cache=true
-  - --cache-ttl=6h
-  waitFor: ["-"]
+  name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$BRANCH_NAME",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA",
+    "docker/my-blog/",
+  ]
+  waitFor: ["my-blog-cache-image"]
 
+# code blog
+- id: code-blog-cache-image
+  name: gcr.io/cloud-builders/docker
+  entrypoint: "/bin/bash"
+  args:
+   - '-c'
+   - |
+     docker pull asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
+  waitFor: ["-"]
 - id: code-blog-build-image
-  name: gcr.io/kaniko-project/executor:latest
-  args:
-  - --context=docker/code-blog/
-  - --dockerfile=docker/code-blog/Dockerfile
-  - --destination=asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA
-  - --cache=true
-  - --cache-ttl=6h
-  waitFor: ["-"]
+  name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "--cache-from", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA",
+    "docker/code-blog/",
+  ]
+  waitFor: ["code-blog-cache-image"]
 
+# static files
+- id: static-files-cache-image
+  name: gcr.io/cloud-builders/docker
+  entrypoint: "/bin/bash"
+  args:
+   - '-c'
+   - |
+     docker pull asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$BRANCH_NAME || exit 0
+  waitFor: ["-"]
 - id: static-files-build-image
-  name: gcr.io/kaniko-project/executor:latest
-  args:
-  - --context=docker/static-files/
-  - --dockerfile=docker/static-files/Dockerfile
-  - --destination=asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA
-  - --cache=true
-  - --cache-ttl=6h
-  waitFor: ["-"]
+  name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$BRANCH_NAME",
+    "-t", "asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA",
+    "docker/static-files/",
+  ]
+  waitFor: ["static-files-cache-image"]
 
-# docker build
 # https://cloud.google.com/cloud-build/docs/configuring-builds/store-images-artifacts
-# # my blog
-# - id: my-blog-cache-image
-#   name: gcr.io/cloud-builders/docker
-#   entrypoint: "/bin/bash"
-#   args:
-#    - '-c'
-#    - |
-#      docker pull asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
-#   waitFor: ["-"]
-# - id: my-blog-build-image
-#   name: gcr.io/cloud-builders/docker
-#   args: [
-#     "build",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$BRANCH_NAME",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA",
-#     "docker/my-blog/",
-#   ]
-#   waitFor: ["my-blog-cache-image"]
-
-# # code blog
-# - id: code-blog-cache-image
-#   name: gcr.io/cloud-builders/docker
-#   entrypoint: "/bin/bash"
-#   args:
-#    - '-c'
-#    - |
-#      docker pull asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
-#   waitFor: ["-"]
-# - id: code-blog-build-image
-#   name: gcr.io/cloud-builders/docker
-#   args: [
-#     "build",
-#     "--cache-from", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA",
-#     "docker/code-blog/",
-#   ]
-#   waitFor: ["code-blog-cache-image"]
-
-# # static files
-# - id: static-files-cache-image
-#   name: gcr.io/cloud-builders/docker
-#   entrypoint: "/bin/bash"
-#   args:
-#    - '-c'
-#    - |
-#      docker pull asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$BRANCH_NAME || exit 0
-#   waitFor: ["-"]
-# - id: static-files-build-image
-#   name: gcr.io/cloud-builders/docker
-#   args: [
-#     "build",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$BRANCH_NAME",
-#     "-t", "asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA",
-#     "docker/static-files/",
-#   ]
-#   waitFor: ["static-files-cache-image"]
-
-# images:
-# - asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA
-# - asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA
-# - asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA
+images:
+- asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$SHORT_SHA
+- asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$SHORT_SHA
+- asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$SHORT_SHA
