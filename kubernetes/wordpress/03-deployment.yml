@@ -45,7 +45,7 @@ spec:
           name: my-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/my-blog:bc06469
+        image: asia.gcr.io/vinta-254817/my-blog:ce2970d
         workingDir: /var/www/html/blog # HACK: specify the WordPress installation path
         volumeMounts:
         - name: php-fpm-unix-socket
@@ -143,7 +143,7 @@ spec:
           name: code-blog-nginx-site
       containers:
       - name: wordpress
-        image: asia.gcr.io/vinta-254817/code-blog:bc06469
+        image: asia.gcr.io/vinta-254817/code-blog:ce2970d
         workingDir: /var/www/html/code # HACK: specify the WordPress installation path
         volumeMounts:
         - name: php-fpm-unix-socket
