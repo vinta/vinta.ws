@@ -9,7 +9,7 @@ steps:
   name: gcr.io/cloud-builders/docker
   entrypoint: "/bin/bash"
   args:
-   - '-c'
+   - "-c"
    - |
      docker pull asia.gcr.io/$PROJECT_ID/$_MY_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
   waitFor: ["-"]
@@ -28,7 +28,7 @@ steps:
   name: gcr.io/cloud-builders/docker
   entrypoint: "/bin/bash"
   args:
-   - '-c'
+   - "-c"
    - |
      docker pull asia.gcr.io/$PROJECT_ID/$_CODE_BLOG_IMAGE_NAME:$BRANCH_NAME || exit 0
   waitFor: ["-"]
@@ -48,7 +48,7 @@ steps:
   name: gcr.io/cloud-builders/docker
   entrypoint: "/bin/bash"
   args:
-   - '-c'
+   - "-c"
    - |
      docker pull asia.gcr.io/$PROJECT_ID/$_STATIC_FILES_IMAGE_NAME:$BRANCH_NAME || exit 0
   waitFor: ["-"]
