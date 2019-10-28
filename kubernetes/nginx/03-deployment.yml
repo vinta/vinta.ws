@@ -32,7 +32,7 @@ spec:
           name: nginx-global-config
       initContainers:
       - name: static-files
-        image: asia.gcr.io/vinta-254817/static-files:ce2970d # https://hub.docker.com/_/busybox
+        image: asia.gcr.io/vinta-254817/static-files:959f25c # https://hub.docker.com/_/busybox
         command: ["cp", "-a", "/var/www/.", "/usr/share/nginx/html/"]
         volumeMounts:
         - name: html
