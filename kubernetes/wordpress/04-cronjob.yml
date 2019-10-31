@@ -15,7 +15,7 @@ spec:
               name: my-blog-wp-config
           containers:
           - name: wp-cron
-            image: asia.gcr.io/vinta-254817/my-blog:959f25c
+            image: asia.gcr.io/vinta-254817/my-blog:0ae599a
             command: ["/usr/local/bin/php"]
             args:
             - /usr/src/wordpress/wp-cron.php
@@ -43,7 +43,7 @@ spec:
               name: code-blog-wp-config
           containers:
           - name: wp-cron
-            image: asia.gcr.io/vinta-254817/code-blog:959f25c
+            image: asia.gcr.io/vinta-254817/code-blog:0ae599a
             command: ["/usr/local/bin/php"]
             args:
             - /usr/src/wordpress/wp-cron.php
