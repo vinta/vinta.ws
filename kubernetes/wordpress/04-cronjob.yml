@@ -24,6 +24,13 @@ spec:
               mountPath: /usr/src/wordpress/wp-config.php
               subPath: wp-config.php
               readOnly: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                cpu: 100m
+                memory: 100Mi
           restartPolicy: OnFailure
 ---
 apiVersion: batch/v1beta1
@@ -52,4 +59,11 @@ spec:
               mountPath: /usr/src/wordpress/wp-config.php
               subPath: wp-config.php
               readOnly: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                cpu: 100m
+                memory: 100Mi
           restartPolicy: OnFailure
