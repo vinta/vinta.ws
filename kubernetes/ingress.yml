@@ -20,9 +20,3 @@ spec:
       - backend:
           serviceName: frontend
           servicePort: http
-  # - host: ifailedtheturingtest.com
-  #   http:
-  #     paths:
-  #     - backend:
-  #         serviceName: frontend
-  #         servicePort: http
