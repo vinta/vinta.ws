@@ -41,6 +41,7 @@ ol, ul {
 
 blockquote, q {
     quotes: none;
+    text-align: left;
 }
 
     blockquote:before, blockquote:after, q:before, q:after {
@@ -244,9 +245,17 @@ sup {
 
 blockquote {
     border-left: solid 4px;
-    font-style: italic;
+    /* font-style: italic; */
     margin: 0 0 2em 0;
-    padding: 0.5em 0 0.5em 2em;
+    padding: 0.5em 0 0.5em 1.5em;
+}
+
+blockquote p {
+    margin: 0 0 0.5em 0;
+}
+
+blockquote span {
+    font-size: 0.8em;
 }
 
 code {
