@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/wordpress
-FROM wordpress:5.2.4-fpm as builder
+FROM wordpress:5.4.2-fpm as builder
 
 WORKDIR /usr/src/wp-cli/
 RUN curl -Os https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -25,7 +25,7 @@ RUN chmod +x install.sh && \
 
 ###
 
-FROM wordpress:5.2.4-fpm
+FROM wordpress:5.4.2-fpm
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY php/custom.ini /usr/local/etc/php/conf.d/
