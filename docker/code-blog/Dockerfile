@@ -38,7 +38,9 @@ RUN cd /usr/src/wordpress/wp-content/ && \
     plugins/akismet/ \
     plugins/hello.php \
     themes/twentysixteen/ \
-    themes/twentyseventeen/
+    themes/twentyseventeen/ \
+    themes/twentynineteen/ \
+    themes/twentytwenty/
 
 # HACK: `101` is the user id of `nginx` user in `nginx:x.x.x-alpine` Docker image
 # https://stackoverflow.com/questions/36824222/how-to-change-the-nginx-process-user-of-the-official-docker-image-nginx
