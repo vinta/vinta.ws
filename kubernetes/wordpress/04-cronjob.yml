@@ -27,8 +27,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 100Mi
+                memory: 20Mi
               limits:
+                cpu: 20m
                 memory: 100Mi
           restartPolicy: OnFailure
 ---
@@ -61,7 +62,8 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 100Mi
+                memory: 20Mi
               limits:
+                cpu: 20m
                 memory: 100Mi
           restartPolicy: OnFailure

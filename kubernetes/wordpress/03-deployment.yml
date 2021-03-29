@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: my-blog
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-blog
@@ -58,9 +58,10 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 128Mi
           limits:
+            cpu: 200m
             memory: 512Mi
       - name: nginx
         image: nginx:1.19.7-alpine # https://hub.docker.com/_/nginx
@@ -92,6 +93,7 @@ spec:
             cpu: 50m
             memory: 100Mi
           limits:
+            cpu: 100m
             memory: 100Mi
 ---
 apiVersion: apps/v1
@@ -99,7 +101,7 @@ kind: Deployment
 metadata:
   name: code-blog
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: code-blog
@@ -154,9 +156,10 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 128Mi
           limits:
+            cpu: 200m
             memory: 512Mi
       - name: nginx
         image: nginx:1.19.7-alpine # https://hub.docker.com/_/nginx
@@ -188,4 +191,5 @@ spec:
             cpu: 50m
             memory: 100Mi
           limits:
+            cpu: 100m
             memory: 100Mi
